@@ -18,15 +18,29 @@ module.exports = [
     },
     {
         mode: 'development',
-        entry: './src/react.tsx',
+        entry: './src/app.tsx',
         target: 'electron-renderer',
         devtool: 'source-map',
         module: {
-            rules: [{
-                test: /\.ts(x?)$/,
-                include: /src/,
-                use: [{ loader: 'ts-loader' }]
-            }]
+            rules: [
+                {
+                    test: /\.ts(x?)$/,
+                    include: /src/,
+                    use: [{ loader: 'ts-loader' }]
+                },
+                {
+                    test: /\.s[ac]ss$/i,
+                    use: [
+                        "style-loader",
+                        "css-loader",
+                        {
+                            loader: "sass-loader",
+                            options: {
+                                implementation: require("sass"),
+                            }
+                        },
+                    ]
+                }]
         },
         output: {
             path: __dirname + '/dist',
@@ -36,6 +50,9 @@ module.exports = [
             new HtmlWebpackPlugin({
                 template: 'src/index.html'
             })
-        ]
+        ],
+        resolve: {
+            extensions: ['.jsx', '.ts', '.tsx', '...']
+        },
     }
 ]

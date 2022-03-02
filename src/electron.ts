@@ -1,3 +1,4 @@
+// This is the Electron Main process
 const { app, BrowserWindow } = require('electron');
 
 const {
@@ -13,8 +14,8 @@ let win;
 function createWindow () {
 
     win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1600,
+        height: 1200,
         webPreferences: {
             devTools: isDev,
             nodeIntegration: true
