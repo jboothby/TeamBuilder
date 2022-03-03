@@ -12,8 +12,8 @@ import {addPeople, Person} from "../../redux/peopleSlice";
 import styled from '@emotion/styled';
 
 const ShorterCell = styled(StructuredListCell)`
-    padding-top: 8px;
-    padding-bottom: 12px;
+    padding-top: 4px;
+    padding-bottom: 8px;
 `
 
 export const PeoplePool: React.FC = () => {
@@ -28,7 +28,7 @@ export const PeoplePool: React.FC = () => {
 
     return(
         <>
-            <Button onClick={addTom}>Click this button to add tom</Button>
+            <Button onClick={addTom}>Click this button to add Another person</Button>
             <StructuredListWrapper>
                 <StructuredListHead>
                     <StructuredListRow head>

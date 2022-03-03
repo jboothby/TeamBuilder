@@ -8,6 +8,7 @@ import {
 
 import Settings20 from '@carbon/icons-react/es/settings/20';
 import * as React from 'react';
+import { SettingsForm } from '../settings-form/settings-form'
 
 export const Shell: React.FC = () => {
     const [expanded, setExpanded] = React.useState(false);
@@ -28,7 +29,9 @@ export const Shell: React.FC = () => {
                     <Settings20 />
                 </HeaderGlobalAction>
             </HeaderGlobalBar>
-            <HeaderPanel aria-label="Header Panel" expanded={expanded} />
+            <HeaderPanel aria-label="Header Panel" expanded={expanded}>
+                <SettingsForm/>
+            </HeaderPanel>
         </Header>
     )
 }

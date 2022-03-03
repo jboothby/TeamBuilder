@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
-import { Shell } from './components/shell'
+import { Shell } from './components/shell/shell'
 import { ShellGrid } from './components/shell-grid/shell-grid'
 import './index.scss';
 

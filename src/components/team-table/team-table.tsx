@@ -17,10 +17,10 @@ interface Team {
     members: Person[]
 }
 
-const NUMBER_IN_TEAMS = 3;
 
 export const TeamTable: React.FC = () => {
     const students = useAppSelector(state => state.people.people);
+    const { teamSize } = useAppSelector(state => state.settings);
     const [teams, setTeams] = React.useState<Map<TeamId, Team>>(new Map<TeamId, Team>());
 
     // Group students by into teams to display
@@ -38,9 +38,8 @@ export const TeamTable: React.FC = () => {
         setTeams(teamMap);
     }, [students]);
 
-    // TODO: Refactor this to use REDUX for number of teams
     const headers = ['Team']
-    for(let i = 0; i <= NUMBER_IN_TEAMS; i++){
+    for(let i = 1; i <= teamSize; i++){
         headers.push(`Student ${i}`)
     }
 

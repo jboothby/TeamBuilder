@@ -29,4 +29,4 @@ export const peopleSlice = createSlice({
 export const { addPeople } = peopleSlice.actions;
 export const selectPeople = (state: RootState) => state.people;
 
-export default peopleSlice.reducer
+export default peopleSlice.reducer;
