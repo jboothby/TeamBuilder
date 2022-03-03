@@ -18,4 +18,6 @@ $css--plex: true;
 
 // Optionally include components that you need
 @import 'carbon-components/scss/components/button/button';
+@import 'carbon-components/scss/components/structured-list/structured-list';
 @import 'carbon-components/scss/components/ui-shell/_ui-shell.scss';
+@import 'carbon-components/scss/components/data-table-v2/data-table-v2';
