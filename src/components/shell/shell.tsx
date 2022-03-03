@@ -19,7 +19,7 @@ export const Shell: React.FC = () => {
 
     return(
         <Header aria-label="Shell Header">
-            <HeaderName href={'https://github.com/jboothby'} prefix={""}> TeamBuilder </HeaderName>
+            <HeaderName href={'https://github.com/jboothby/TeamBuilder'} prefix={""}> TeamBuilder </HeaderName>
             <HeaderGlobalBar>
                 <HeaderGlobalAction
                     tooltipAlignment="end"

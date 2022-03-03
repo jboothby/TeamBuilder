@@ -9,6 +9,7 @@ import {
 } from 'carbon-components-react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { setDarkMode, setAnimation, setTeamSize } from "../../redux/settingSlice";
+import styled from '@emotion/styled'
 
 export const SettingsForm: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -21,10 +22,21 @@ export const SettingsForm: React.FC = () => {
         dispatch(setTeamSize(currentValue));
     }
 
+    const TextColorToggle = styled(Toggle)`
+      .bx--toggle-input__label {
+        color: #0F62FE
+      }
+    `
+    const TextColorNumberInput = styled(NumberInput)`
+      .bx--label {
+        color: #0F62FE
+      }
+    `
+
     return (
         <Form>
             <FormGroup legendText={'Settings Toggles'}>
-                <Toggle
+                <TextColorToggle
                     labelText={"Enable selection animations"}
                     size={'md'}
                     labelA={"Off"}
@@ -32,7 +44,7 @@ export const SettingsForm: React.FC = () => {
                     defaultToggled={animation}
                     id={"animation-toggle"}
                 />
-                <Toggle
+                <TextColorToggle
                     labelText={"Enable dark mode"}
                     size={'md'}
                     labelA={"Off"}
@@ -41,8 +53,8 @@ export const SettingsForm: React.FC = () => {
                     id={"darkmode-toggle"}
                 />
             </FormGroup>
-            <FormGroup legendText={'Team Parameters'}>
-                <NumberInput
+            <FormGroup>
+                <TextColorNumberInput
                     label={"People per team"}
                     min={2}
                     max={10}
