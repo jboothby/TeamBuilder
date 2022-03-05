@@ -1,32 +1,31 @@
 import * as React from 'react';
-import { Grid, Row, Column } from 'carbon-components-react';
+import { Grid as CarbonGrid, Row, Column as CarbonColumn } from 'carbon-components-react';
 import { PeoplePool } from '../people-pool/people-pool';
 import { TeamTable } from '../team-table/team-table';
 import styled from '@emotion/styled';
 
-const NoPadGrid = styled(Grid)`
+const Grid = styled(CarbonGrid)`
     padding-left: 0;
     padding-right: 0;
 `
 
-const NoPadColumn = styled(Column)`
+const Column = styled(CarbonColumn)`
     padding-left: 0;
     padding-right: 0;
+    padding-top: 40px;
 `
 
 export const ShellGrid: React.FC = () => {
     return (
-        <NoPadGrid fullWidth>
+        <Grid fullWidth>
             <Row>
-                <NoPadColumn sm={1} md={2} lg={3}>
-                    <h2>Student Pool</h2>
+                <Column sm={1} md={1} lg={2}>
                     <PeoplePool/>
-                </NoPadColumn>
-                <NoPadColumn sm={3} md={6} lg={9}>
-                    <h2>Teams</h2>
+                </Column>
+                <Column sm={3} md={7} lg={10}>
                     <TeamTable/>
-                </NoPadColumn>
+                </Column>
             </Row>
-        </NoPadGrid>
+        </Grid>
     )
 }

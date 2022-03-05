@@ -1,38 +1,32 @@
 import * as React from 'react';
 import {
-    Button,
     StructuredListWrapper,
     StructuredListHead,
     StructuredListRow,
     StructuredListBody,
     StructuredListCell
 } from 'carbon-components-react';
-import { useAppSelector, useAppDispatch } from '../../redux/hooks'
-import {addPeople, Person} from "../../redux/peopleSlice";
+import { useAppSelector } from '../../redux/hooks'
 import styled from '@emotion/styled';
 
 const ShorterCell = styled(StructuredListCell)`
-    padding-top: 4px;
-    padding-bottom: 8px;
+    padding-top: 2px;
+    padding-bottom: 4px;
+`
+const BlueCell = styled(StructuredListCell)`
+    background-color: #0F62FE;
+    color: white;
 `
 
 export const PeoplePool: React.FC = () => {
-    const dispatch = useAppDispatch()
 
-    const addTom = () => {
-        const Tom = {name: `Tom ${people.length}`, team: `${people.length % 4}`} as Person;
-        dispatch(addPeople([Tom]));
-    }
-
-    const people = useAppSelector(state => state.people.people);
-
+    const people = useAppSelector(state => state.people.people).filter(x => !x.assigned);
     return(
         <>
-            <Button onClick={addTom}>Click this button to add Another person</Button>
             <StructuredListWrapper>
                 <StructuredListHead>
                     <StructuredListRow head>
-                        <StructuredListCell head> Student Names </StructuredListCell>
+                        <BlueCell head> Unassigned People </BlueCell>
                     </StructuredListRow>
                 </StructuredListHead>
                 <StructuredListBody>

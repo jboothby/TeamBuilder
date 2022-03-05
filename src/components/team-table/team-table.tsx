@@ -19,12 +19,14 @@ interface Team {
 
 
 export const TeamTable: React.FC = () => {
-    const students = useAppSelector(state => state.people.people);
+    const students = useAppSelector(state => state.people.people).filter(x => x.assigned);
     const { teamSize } = useAppSelector(state => state.settings);
     const [teams, setTeams] = React.useState<Map<TeamId, Team>>(new Map<TeamId, Team>());
 
     // Group students by into teams to display
     React.useEffect(() => {
+        if(!students.length) return;
+
         const teamMap = new Map<TeamId, Team>();
 
         students.forEach(student => {

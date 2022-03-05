@@ -22,11 +22,14 @@ export const peopleSlice = createSlice({
     reducers: {
         addPeople: (state, action: PayloadAction<Person[]>) => {
             state.people = [...state.people, ...action.payload];
+        },
+        clearPeople: state => {
+            state.people = [];
         }
     }
 })
 
-export const { addPeople } = peopleSlice.actions;
+export const { addPeople, clearPeople } = peopleSlice.actions;
 export const selectPeople = (state: RootState) => state.people;
 
 export default peopleSlice.reducer;
