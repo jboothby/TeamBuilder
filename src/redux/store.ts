@@ -1,7 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { enableMapSet } from 'immer';
 import peopleReducer from './peopleSlice';
 import settingReducer from './settingSlice';
 
+enableMapSet();
 
 export const store = configureStore({
     reducer: {

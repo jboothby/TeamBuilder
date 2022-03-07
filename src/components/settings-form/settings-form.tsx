@@ -7,7 +7,7 @@ import {
 } from 'carbon-components-react';
 import { FileUploader } from '../file-uploader/file-uploader'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { setDarkMode, setAnimation, setTeamSize } from "../../redux/settingSlice";
+import {setDarkMode, setAnimation, setTeamSize, setCsvHasHeader} from "../../redux/settingSlice";
 import styled from '@emotion/styled'
 
 const max_team_size = 10;
@@ -27,7 +27,7 @@ const TextColorNumberInput = styled(NumberInput)`
 
 export const SettingsForm: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { darkMode, animation, teamSize } = useAppSelector(state => state.settings);
+    const { darkMode, animation, teamSize, csvHasHeader } = useAppSelector(state => state.settings);
 
     const handleTeamSizeChange = () => {
         const currentValue: number = Number(
@@ -37,6 +37,10 @@ export const SettingsForm: React.FC = () => {
             return;
         }
         dispatch(setTeamSize(currentValue));
+    }
+
+    const handleCsvHeaderToggleChange = () => {
+        dispatch(setCsvHasHeader(!csvHasHeader));
     }
 
     return (
@@ -72,6 +76,14 @@ export const SettingsForm: React.FC = () => {
             </FormGroup>
             <FormGroup legendText={''}>
                 <FileUploader/>
+                <TextColorToggle
+                    labelText={"CSV has headers"}
+                    labelA={"No"}
+                    labelB={"Yes"}
+                    defaultToggled={csvHasHeader}
+                    id={"header-toggle"}
+                    onChange={handleCsvHeaderToggleChange}
+                    />
             </FormGroup>
         </Form>
     )

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+    Button,
     StructuredListWrapper,
     StructuredListHead,
     StructuredListRow,
@@ -20,7 +21,7 @@ const BlueCell = styled(StructuredListCell)`
 
 export const PeoplePool: React.FC = () => {
 
-    const people = useAppSelector(state => state.people.people).filter(x => !x.assigned);
+    const people = useAppSelector(state => state.people.unassignedPeople);
     return(
         <>
             <StructuredListWrapper>

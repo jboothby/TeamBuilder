@@ -19,26 +19,9 @@ interface Team {
 
 
 export const TeamTable: React.FC = () => {
-    const students = useAppSelector(state => state.people.people).filter(x => x.assigned);
     const { teamSize } = useAppSelector(state => state.settings);
-    const [teams, setTeams] = React.useState<Map<TeamId, Team>>(new Map<TeamId, Team>());
+    const { teams } = useAppSelector(state => state.people);
 
-    // Group students by into teams to display
-    React.useEffect(() => {
-        if(!students.length) return;
-
-        const teamMap = new Map<TeamId, Team>();
-
-        students.forEach(student => {
-            if(!teamMap.has(student.team)){
-                teamMap.set(student.team, {id: student.team, members: [student]} as Team)
-            } else {
-                teamMap.set(student.team, {id: student.team, members: [...teamMap.get(student.team).members, student]})
-            }
-        });
-
-        setTeams(teamMap);
-    }, [students]);
 
     const headers = ['Team']
     for(let i = 1; i <= teamSize; i++){
@@ -57,20 +40,22 @@ export const TeamTable: React.FC = () => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {Array.from(teams.values()).map(team =>
-                    <TableRow id={team.id}>
-                        <TableCell>
-                            {team.id}
-                        </TableCell>
-                        {team.members.map(member =>
-                            <TableCell key={member.name}>
-                                {member.name}
+                {Array.from(Object.values(teams))
+                    .sort((a,b) => a.number - b.number)
+                    .map(team =>
+                        <TableRow>
+                            <TableCell>
+                                {team.number}
                             </TableCell>
-                        )}
-                    </TableRow>
-                )}
+                            {team.members.length && team.members.map(member =>
+                                <TableCell>
+                                    {member.name}
+                                </TableCell>
+                            )}
+                        </TableRow>
+                        )
+                }
             </TableBody>
         </Table>
-
     )
 }
