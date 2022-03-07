@@ -2,24 +2,25 @@ import * as React from 'react';
 import {
     Form,
     FormGroup,
-    NumberInput,
-    Toggle,
+    NumberInput as CarbonNumberInput,
+    Toggle as CarbonToggle,
 } from 'carbon-components-react';
 import { FileUploader } from '../file-uploader/file-uploader'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import {setDarkMode, setAnimation, setTeamSize, setCsvHasHeader} from "../../redux/settingSlice";
+import { setTeamSize, setCsvHasHeader } from "../../redux/settingSlice";
 import styled from '@emotion/styled'
+import { clearTeams } from "../../redux/peopleSlice";
 
 const max_team_size = 10;
 const min_team_size = 2;
 
-const TextColorToggle = styled(Toggle)`
+const Toggle = styled(CarbonToggle)`
       .bx--toggle-input__label {
-        color: black;
         padding-top: 10px;
       }
     `
-const TextColorNumberInput = styled(NumberInput)`
+
+const NumberInput = styled(CarbonNumberInput)`
       .bx--label {
         color: black;
       }
@@ -27,7 +28,7 @@ const TextColorNumberInput = styled(NumberInput)`
 
 export const SettingsForm: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { darkMode, animation, teamSize, csvHasHeader } = useAppSelector(state => state.settings);
+    const { teamSize, csvHasHeader } = useAppSelector(state => state.settings);
 
     const handleTeamSizeChange = () => {
         const currentValue: number = Number(
@@ -37,6 +38,7 @@ export const SettingsForm: React.FC = () => {
             return;
         }
         dispatch(setTeamSize(currentValue));
+        dispatch(clearTeams());
     }
 
     const handleCsvHeaderToggleChange = () => {
@@ -46,25 +48,7 @@ export const SettingsForm: React.FC = () => {
     return (
         <Form>
             <FormGroup legendText={''}>
-                <TextColorToggle
-                    labelText={"Enable selection animations"}
-                    size={'md'}
-                    labelA={"Off"}
-                    labelB={"On"}
-                    defaultToggled={animation}
-                    id={"animation-toggle"}
-                />
-                <TextColorToggle
-                    labelText={"Enable dark mode"}
-                    size={'md'}
-                    labelA={"Off"}
-                    labelB={"On"}
-                    defaultToggled={darkMode}
-                    id={"darkmode-toggle"}
-                />
-            </FormGroup>
-            <FormGroup legendText={''}>
-                <TextColorNumberInput
+                <NumberInput
                     label={"People per team"}
                     min={min_team_size}
                     max={max_team_size}
@@ -76,7 +60,7 @@ export const SettingsForm: React.FC = () => {
             </FormGroup>
             <FormGroup legendText={''}>
                 <FileUploader/>
-                <TextColorToggle
+                <Toggle
                     labelText={"CSV has headers"}
                     labelA={"No"}
                     labelB={"Yes"}

@@ -11,10 +11,12 @@ import Settings20 from '@carbon/icons-react/es/settings/20';
 import * as React from 'react';
 import { SettingsForm } from '../settings-form/settings-form'
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {assignNextTeam} from "../../redux/peopleSlice";
+import {assignNextTeam, clearTeams} from "../../redux/peopleSlice";
+import { gray20 } from '@carbon/colors';
+import {CsvDownload} from "../csv-download/csv-download";
 
 const ColorPanel = styled(HeaderPanel)`
-    background-color: #E0E0E0;
+    background-color: ${gray20};
     h2 {
       text-align: center;
       color: black;
@@ -23,9 +25,12 @@ const ColorPanel = styled(HeaderPanel)`
 
 export const Shell: React.FC = () => {
     const [expanded, setExpanded] = React.useState(false);
-    const dispatch = useAppDispatch();
     const teamSize = useAppSelector(state => state.settings.teamSize)
+    const { teams, unassignedPeople } = useAppSelector(state => state.people);
+
+    const dispatch = useAppDispatch();
     const createNewTeam = () => dispatch(assignNextTeam(teamSize));
+    const handleClearTeams = () => dispatch(clearTeams());
 
     const toggleRightPanel = () => {
         setExpanded(!expanded);
@@ -35,7 +40,19 @@ export const Shell: React.FC = () => {
         <Header aria-label="Shell Header">
             <HeaderName href={'https://github.com/jboothby/TeamBuilder'} prefix={""}> TeamBuilder </HeaderName>
             <HeaderGlobalBar>
-                <Button kind={'primary'} onClick={createNewTeam}>Assign next team</Button>
+                {(!unassignedPeople.length && Object.values(teams).length) &&
+                    <CsvDownload/>
+                }
+                {Object.values(teams).length &&
+                    <Button kind={'danger'} onClick={handleClearTeams}>Clear teams</Button>
+                }
+                <Button
+                    kind={'primary'}
+                    onClick={createNewTeam}
+                    disabled={!unassignedPeople.length}
+                >
+                    Assign next team
+                </Button>
                 <HeaderGlobalAction
                     tooltipAlignment="end"
                     isActive={expanded}

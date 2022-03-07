@@ -1,6 +1,5 @@
 // State management
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from './store';
 
 export type TeamNumber = number;
 
@@ -44,17 +43,25 @@ export const peopleSlice = createSlice({
             const reallyBigPrime = 1009;
             let newTeamMembers: Person[] = [];
             // Add members until size of team is met
-            for (let i = 0; i < action.payload && i < state.unassignedPeople.length; i++){
-                const psuedoRandomIndex = ((i * reallyBigPrime) % (state.unassignedPeople.length - 1));
+            for (let i = 1; i <= action.payload && i <= state.unassignedPeople.length; i++){
+                const psuedoRandomIndex = ((i * reallyBigPrime) % (state.unassignedPeople.length));
                 newTeamMembers.push(state.unassignedPeople[psuedoRandomIndex])
             }
             state.unassignedPeople = state.unassignedPeople.filter(x => !(newTeamMembers.includes(x)))
             state.teams[nextTeamNumber] = {number: nextTeamNumber, members: newTeamMembers} as Team;
+        },
+        clearTeams: state => {
+            const peopleToUnassign =
+                Object.values(state.teams).reduce<Person[]>((acc, val) => {
+                    acc.push(...val.members);
+                    return acc;
+                }, [] as Person[])
+            state.unassignedPeople = [...state.unassignedPeople, ...peopleToUnassign]
+            state.teams = {};
         }
     }
 })
 
-export const { addPeople, clearPeople, assignNextTeam} = peopleSlice.actions;
-export const selectPeople = (state: RootState) => state.people;
+export const { addPeople, clearPeople, assignNextTeam, clearTeams} = peopleSlice.actions;
 
 export default peopleSlice.reducer;

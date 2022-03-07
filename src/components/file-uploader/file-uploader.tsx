@@ -7,6 +7,7 @@ const fs = require('fs');
 
 export const FileUploader: React.FC = () => {
     const csvHasHeader = useAppSelector(state => state.settings.csvHasHeader);
+    const { unassignedPeople, teams} = useAppSelector(state => state.people );
     const dispatch = useAppDispatch();
 
     const handleFileDelete = () => dispatch(clearPeople());
@@ -16,9 +17,9 @@ export const FileUploader: React.FC = () => {
         const path: string =  (file as any).path; // This is bad JuJu, but HTML5 file obj does have path prop
 
         // Strip first line if the csv contains header
-        const data = csvHasHeader
-            ? fs.readFileSync(path).toString().split('\n').slice(1,)
-            : fs.readFileSync(path).toString().split('\n')
+        const data: string[] = csvHasHeader
+            ? fs.readFileSync(path).toString().split('\n').slice(1,).filter(x => !!x)
+            : fs.readFileSync(path).toString().split('\n').filter(x => !!x);
 
         const people: Person[] = data.map(x => {
             return({
@@ -42,6 +43,7 @@ export const FileUploader: React.FC = () => {
             filenameStatus={'edit'}
             onChange={handleFileUpload}
             onDelete={handleFileDelete}
+            disabled={unassignedPeople.length || Object.values(teams).length}
         />
     )
 }

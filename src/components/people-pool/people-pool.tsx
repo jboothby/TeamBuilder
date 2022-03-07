@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-    Button,
     StructuredListWrapper,
     StructuredListHead,
     StructuredListRow,
@@ -10,13 +9,18 @@ import {
 import { useAppSelector } from '../../redux/hooks'
 import styled from '@emotion/styled';
 
+
 const ShorterCell = styled(StructuredListCell)`
     padding-top: 2px;
     padding-bottom: 4px;
 `
 const BlueCell = styled(StructuredListCell)`
     background-color: #0F62FE;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    text-align: center;
     color: white;
+    height: 20px;
 `
 
 export const PeoplePool: React.FC = () => {
@@ -27,12 +31,12 @@ export const PeoplePool: React.FC = () => {
             <StructuredListWrapper>
                 <StructuredListHead>
                     <StructuredListRow head>
-                        <BlueCell head> Unassigned People </BlueCell>
+                        <BlueCell head> Unassigned </BlueCell>
                     </StructuredListRow>
                 </StructuredListHead>
                 <StructuredListBody>
                     {people.map(person =>
-                        <StructuredListRow>
+                        <StructuredListRow key={`${person.name}-row`}>
                             <ShorterCell> {person.name} </ShorterCell>
                         </StructuredListRow>)}
                 </StructuredListBody>
