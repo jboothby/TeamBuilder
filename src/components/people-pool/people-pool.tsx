@@ -4,17 +4,24 @@ import {
     StructuredListHead,
     StructuredListRow,
     StructuredListBody,
-    StructuredListCell
+    StructuredListCell as CarbonCell
 } from 'carbon-components-react';
 import { useAppSelector } from '../../redux/hooks'
 import styled from '@emotion/styled';
+import { blue20 } from '@carbon/colors';
 
-
-const ShorterCell = styled(StructuredListCell)`
+const HighlightCell = styled(CarbonCell)`
+    background-color: ${ blue20 };
     padding-top: 2px;
     padding-bottom: 4px;
 `
-const BlueCell = styled(StructuredListCell)`
+
+const Cell = styled(CarbonCell)`
+    padding-top: 2px;
+    padding-bottom: 4px;
+`
+
+const HeaderCell = styled(CarbonCell)`
     background-color: #0F62FE;
     padding-top: 7px;
     padding-bottom: 7px;
@@ -31,13 +38,16 @@ export const PeoplePool: React.FC = () => {
             <StructuredListWrapper>
                 <StructuredListHead>
                     <StructuredListRow head>
-                        <BlueCell head> Unassigned </BlueCell>
+                        <HeaderCell head> Unassigned </HeaderCell>
                     </StructuredListRow>
                 </StructuredListHead>
                 <StructuredListBody>
                     {people.map(person =>
                         <StructuredListRow key={`${person.name}-row`}>
-                            <ShorterCell> {person.name} </ShorterCell>
+                            {person.highlighted
+                                ? <HighlightCell>{person.name} </HighlightCell>
+                                : <Cell>{person.name} </Cell>
+                            }
                         </StructuredListRow>)}
                 </StructuredListBody>
             </StructuredListWrapper>

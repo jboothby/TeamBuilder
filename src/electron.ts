@@ -1,3 +1,6 @@
+import path from "path";
+import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
+
 // This is the Electron Main process
 const { app, BrowserWindow } = require('electron');
 
@@ -13,7 +16,8 @@ function createWindow () {
         webPreferences: {
             devTools: isDev,
             nodeIntegration: true,
-            contextIsolation: false
+            contextIsolation: false,
+            webSecurity: false
         }
     });
 
@@ -22,3 +26,9 @@ function createWindow () {
 }
 
 app.on('ready', createWindow);
+
+app.whenReady().then(() => {
+    installExtension(REDUX_DEVTOOLS)
+        .then(name => console.log(`Added ${name}`))
+        .catch(err => console.log('Error: ', err));
+})

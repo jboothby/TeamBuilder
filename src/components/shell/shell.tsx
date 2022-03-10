@@ -11,9 +11,10 @@ import Settings20 from '@carbon/icons-react/es/settings/20';
 import * as React from 'react';
 import { SettingsForm } from '../settings-form/settings-form'
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {assignNextTeam, clearTeams} from "../../redux/peopleSlice";
+import { clearTeams} from "../../redux/peopleSlice";
 import { gray20 } from '@carbon/colors';
 import {CsvDownload} from "../csv-download/csv-download";
+import { TeamAssignButton } from '../team-assign-button/team-assign-button';
 
 const ColorPanel = styled(HeaderPanel)`
     background-color: ${gray20};
@@ -25,11 +26,9 @@ const ColorPanel = styled(HeaderPanel)`
 
 export const Shell: React.FC = () => {
     const [expanded, setExpanded] = React.useState(false);
-    const teamSize = useAppSelector(state => state.settings.teamSize)
     const { teams, unassignedPeople } = useAppSelector(state => state.people);
 
     const dispatch = useAppDispatch();
-    const createNewTeam = () => dispatch(assignNextTeam(teamSize));
     const handleClearTeams = () => dispatch(clearTeams());
 
     const toggleRightPanel = () => {
@@ -46,13 +45,7 @@ export const Shell: React.FC = () => {
                 {Object.values(teams).length &&
                     <Button kind={'danger'} onClick={handleClearTeams}>Clear teams</Button>
                 }
-                <Button
-                    kind={'primary'}
-                    onClick={createNewTeam}
-                    disabled={!unassignedPeople.length}
-                >
-                    Assign next team
-                </Button>
+                <TeamAssignButton/>
                 <HeaderGlobalAction
                     tooltipAlignment="end"
                     isActive={expanded}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FileUploader as CarbonFileUploader } from 'carbon-components-react';
 import {useAppDispatch, useAppSelector} from '../../redux/hooks';
-import {addPeople, clearPeople, Person } from '../../redux/peopleSlice';
+import {addPeople, clearPeople, clearTeams, Person } from '../../redux/peopleSlice';
 const fs = require('fs');
 
 
@@ -10,7 +10,10 @@ export const FileUploader: React.FC = () => {
     const { unassignedPeople, teams} = useAppSelector(state => state.people );
     const dispatch = useAppDispatch();
 
-    const handleFileDelete = () => dispatch(clearPeople());
+    const handleFileDelete = () => {
+        dispatch(clearTeams());
+        dispatch(clearPeople());
+    }
 
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file: File = event.target.files[0];
@@ -24,8 +27,7 @@ export const FileUploader: React.FC = () => {
         const people: Person[] = data.map(x => {
             return({
                 name: x.split(',').join(' '),
-                assigned: false,
-                team: null,
+                highlighted: false,
             } as Person)
         });
         dispatch(addPeople(people));
@@ -43,7 +45,7 @@ export const FileUploader: React.FC = () => {
             filenameStatus={'edit'}
             onChange={handleFileUpload}
             onDelete={handleFileDelete}
-            disabled={unassignedPeople.length || Object.values(teams).length}
+            disabled={!!(unassignedPeople.length || !!Object.values(teams).length)}
         />
     )
 }

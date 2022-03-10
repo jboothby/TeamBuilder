@@ -8,6 +8,7 @@ import {
 import { FileUploader } from '../file-uploader/file-uploader'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { setTeamSize, setCsvHasHeader } from "../../redux/settingSlice";
+import { setAnimation } from '../../redux/peopleSlice';
 import styled from '@emotion/styled'
 import { clearTeams } from "../../redux/peopleSlice";
 
@@ -29,6 +30,7 @@ const NumberInput = styled(CarbonNumberInput)`
 export const SettingsForm: React.FC = () => {
     const dispatch = useAppDispatch();
     const { teamSize, csvHasHeader } = useAppSelector(state => state.settings);
+    const { animation } = useAppSelector(state => state.people);
 
     const handleTeamSizeChange = () => {
         const currentValue: number = Number(
@@ -40,6 +42,8 @@ export const SettingsForm: React.FC = () => {
         dispatch(setTeamSize(currentValue));
         dispatch(clearTeams());
     }
+
+    const handleAnimationToggleChange = () => dispatch(setAnimation(!animation));
 
     const handleCsvHeaderToggleChange = () => {
         dispatch(setCsvHasHeader(!csvHasHeader));
@@ -56,6 +60,14 @@ export const SettingsForm: React.FC = () => {
                     id={"teamsize-number-input"}
                     invalidText={"Number must be { x | 2 <= x <= 10 }"}
                     onChange={handleTeamSizeChange}
+                />
+                <Toggle
+                    labelText={"Enable selection animation"}
+                    labelA={"False"}
+                    labelB={"True"}
+                    defaultToggled={animation}
+                    id={"animationToggle"}
+                    onChange={handleAnimationToggleChange}
                 />
             </FormGroup>
             <FormGroup legendText={''}>

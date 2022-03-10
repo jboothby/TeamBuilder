@@ -2,7 +2,7 @@
   "name": "teambuilder",
   "version": "1.0.0",
   "description": "An App for building random teams of students",
-  "main": "index.js",
+  "main": "./dist/electron.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config ./webpack.config.js",
@@ -19,6 +19,7 @@
     "concurrently": "^7.0.0",
     "css-loader": "^6.6.0",
     "electron": "^17.1.0",
+    "electron-devtools-installer": "^3.2.0",
     "fibers": "^5.0.1",
     "html-webpack-plugin": "^5.5.0",
     "react": "^17.0.2",
@@ -42,8 +43,6 @@
     "carbon-components": "^10.54.0",
     "carbon-components-react": "^7.54.1",
     "csv-to-js-parser": "^2.3.4",
-    "electron-devtools-installer": "^3.2.0",
-    "electron-packager": "^15.4.0",
     "react-csv": "^2.2.2"
   }
 }
