@@ -34,14 +34,15 @@ export const TeamAssignButton: React.FC = () => {
         let delayTime = 100;
         const shuffledPeople = shuffleArray(unassignedPeople);
         let id: number;
+        const iterCount = shuffledPeople.length > 25 ? 25 : shuffledPeople.length;
 
         // Iterate to team size, or amount of remaining people
         for(let i = 0; i < teamSize; i++){
-            for(let j = 0; j < shuffledPeople.length - i; j++){
+            for(let j = 0; j < iterCount - i; j++){
                 id = shuffledPeople[j].id;
 
                 // If last person, flash and then stay highlighted
-                if ( j === (shuffledPeople.length - i - 1)){
+                if ( j === (iterCount - i - 1)){
                     dispatch(highlightPerson(id))
                     await delay(200);
                     dispatch(highlightPerson(id))
@@ -57,7 +58,7 @@ export const TeamAssignButton: React.FC = () => {
 
                 // Delay time should be a fraction of size of people to avoid overly long times
                 // Plan to take 5 seconds per team pick
-                delayTime = (5000 / teamSize) / (shuffledPeople.length)
+                delayTime = 50;
                 dispatch(highlightPerson(id))
                 await delay(delayTime);
                 dispatch(highlightPerson(id))

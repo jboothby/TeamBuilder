@@ -9,6 +9,7 @@ import {
 import { useAppSelector } from '../../redux/hooks'
 import styled from '@emotion/styled';
 import { blue20 } from '@carbon/colors';
+import { Person } from '../../redux/peopleSlice';
 
 const HighlightCell = styled(CarbonCell)`
     background-color: ${ blue20 };
@@ -29,10 +30,16 @@ const HeaderCell = styled(CarbonCell)`
     color: white;
     height: 20px;
 `
+type ReduceReturnType = {
+    even: Person[],
+    odd: Person[]
+}
 
 export const PeoplePool: React.FC = () => {
 
     const people = useAppSelector(state => state.people.unassignedPeople);
+    let groups: ReduceReturnType = null;
+
     return(
         <>
             <StructuredListWrapper>
@@ -42,13 +49,14 @@ export const PeoplePool: React.FC = () => {
                     </StructuredListRow>
                 </StructuredListHead>
                 <StructuredListBody>
-                    {people.map(person =>
+                    { people.map(person =>
                         <StructuredListRow key={`${person.id}-row`}>
                             {person.highlighted
                                 ? <HighlightCell>{person.name} </HighlightCell>
                                 : <Cell>{person.name} </Cell>
                             }
-                        </StructuredListRow>)}
+                        </StructuredListRow>)
+                    }
                 </StructuredListBody>
             </StructuredListWrapper>
         </>

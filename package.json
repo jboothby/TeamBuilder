@@ -43,6 +43,7 @@
     "carbon-components": "^10.54.0",
     "carbon-components-react": "^7.54.1",
     "csv-to-js-parser": "^2.3.4",
+    "electron-packager": "^15.4.0",
     "react-csv": "^2.2.2"
   }
 }
