@@ -43,12 +43,12 @@ export const TeamTable: React.FC = () => {
                 {Array.from(Object.values(teams))
                     .sort((a,b) => a.number - b.number)
                     .map(team =>
-                        <TableRow>
+                        <TableRow key={team.number}>
                             <TableCell>
                                 {team.number}
                             </TableCell>
                             {team.members.length && team.members.map(member =>
-                                <TableCell>
+                                <TableCell key={member.id}>
                                     {member.name}
                                 </TableCell>
                             )}

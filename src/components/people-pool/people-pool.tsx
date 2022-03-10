@@ -12,13 +12,13 @@ import { blue20 } from '@carbon/colors';
 
 const HighlightCell = styled(CarbonCell)`
     background-color: ${ blue20 };
-    padding-top: 2px;
-    padding-bottom: 4px;
+    padding-top: 1px;
+    padding-bottom: 2px;
 `
 
 const Cell = styled(CarbonCell)`
-    padding-top: 2px;
-    padding-bottom: 4px;
+    padding-top: 1px;
+    padding-bottom: 2px;
 `
 
 const HeaderCell = styled(CarbonCell)`
@@ -43,7 +43,7 @@ export const PeoplePool: React.FC = () => {
                 </StructuredListHead>
                 <StructuredListBody>
                     {people.map(person =>
-                        <StructuredListRow key={`${person.name}-row`}>
+                        <StructuredListRow key={`${person.id}-row`}>
                             {person.highlighted
                                 ? <HighlightCell>{person.name} </HighlightCell>
                                 : <Cell>{person.name} </Cell>

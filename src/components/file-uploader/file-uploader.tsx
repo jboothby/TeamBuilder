@@ -24,8 +24,9 @@ export const FileUploader: React.FC = () => {
             ? fs.readFileSync(path).toString().split('\n').slice(1,).filter(x => !!x)
             : fs.readFileSync(path).toString().split('\n').filter(x => !!x);
 
-        const people: Person[] = data.map(x => {
+        const people: Person[] = data.map((x, index) => {
             return({
+                id: index,
                 name: x.split(',').join(' '),
                 highlighted: false,
             } as Person)

@@ -26,7 +26,7 @@ const ColorPanel = styled(HeaderPanel)`
 
 export const Shell: React.FC = () => {
     const [expanded, setExpanded] = React.useState(false);
-    const { teams, unassignedPeople } = useAppSelector(state => state.people);
+    const { teams, unassignedPeople, busy } = useAppSelector(state => state.people);
 
     const dispatch = useAppDispatch();
     const handleClearTeams = () => dispatch(clearTeams());
@@ -43,7 +43,7 @@ export const Shell: React.FC = () => {
                     <CsvDownload/>
                 }
                 {Object.values(teams).length &&
-                    <Button kind={'danger'} onClick={handleClearTeams}>Clear teams</Button>
+                    <Button kind={'danger'} onClick={handleClearTeams} disabled={busy}>Clear teams</Button>
                 }
                 <TeamAssignButton/>
                 <HeaderGlobalAction

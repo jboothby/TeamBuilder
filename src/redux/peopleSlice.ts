@@ -4,6 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export type TeamNumber = number;
 
 export interface Person {
+    id: number,
     name: string,
     highlighted: boolean
 }
@@ -16,11 +17,12 @@ export interface Team {
 interface PeopleState {
     unassignedPeople: Person[];
     teams: Record<TeamNumber, Team>
-    animation: boolean
+    animation: boolean,
+    busy: boolean,
 }
 
 const initialState: PeopleState = {
-    unassignedPeople: [], teams: {}, animation: true
+    unassignedPeople: [], teams: {}, animation: true, busy: false
 }
 
 export const highestTeam = (teams: Record<TeamNumber, Team>): TeamNumber => {
@@ -64,14 +66,18 @@ export const peopleSlice = createSlice({
         setAnimation: (state, action: PayloadAction<boolean>) => {
             state.animation = action.payload;
         },
-        //highlight person at given index in unassigned array
+        //highlight person with given id in unassigned list
         highlightPerson: (state, action: PayloadAction<number>) => {
-            state.unassignedPeople[action.payload].highlighted = !(state.unassignedPeople[action.payload].highlighted);
+            const index = state.unassignedPeople.findIndex(x => x.id === action.payload);
+            state.unassignedPeople[index].highlighted = !(state.unassignedPeople[index].highlighted);
         },
         assignPeopleToTeam: (state, action: PayloadAction<{ teamId: TeamNumber, people: Person[] }>) => {
             const { teamId, people } = action.payload;
             state.teams[teamId] = { number: teamId, members: people };
-            state.unassignedPeople = state.unassignedPeople.filter(x => !(people.map(person => person.name).includes(x.name)));
+            state.unassignedPeople = state.unassignedPeople.filter(x => !(people.map(person => person.id).includes(x.id)));
+        },
+        setBusy: (state, action: PayloadAction<boolean>) => {
+            state.busy = action.payload
         }
     }
 })
@@ -83,7 +89,8 @@ export const {
     clearTeams,
     setAnimation,
     highlightPerson,
-    assignPeopleToTeam
+    assignPeopleToTeam,
+    setBusy
 } = peopleSlice.actions;
 
 export default peopleSlice.reducer;
