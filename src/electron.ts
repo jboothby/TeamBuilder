@@ -1,5 +1,4 @@
-import path from "path";
-import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
+import installExtension, { REDUX_DEVTOOLS } from 'electron-devtools-installer';
 
 // This is the Electron Main process
 const { app, BrowserWindow } = require('electron');
@@ -21,7 +20,7 @@ function createWindow () {
         }
     });
 
-    win.loadFile('../dist/index.html');
+    win.loadFile('./index.html');
 
 }
 
