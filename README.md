@@ -5,3 +5,9 @@ To build and run:
 - Clone Repo
 - npm i
 - npm start
+
+
+To Package:
+- Clone repo
+- npm i
+- npm run package-native
