@@ -34,7 +34,7 @@ export const TeamAssignButton: React.FC = () => {
         let delayTime = 100;
         const shuffledPeople = shuffleArray(unassignedPeople);
         let id: number;
-        const iterCount = shuffledPeople.length > 25 ? 25 : shuffledPeople.length;
+        const iterCount = shuffledPeople.length > 15 ? 15 : shuffledPeople.length;
 
         // Iterate to team size, or amount of remaining people
         for(let i = 0; i < teamSize; i++){
@@ -58,7 +58,7 @@ export const TeamAssignButton: React.FC = () => {
 
                 // Delay time should be a fraction of size of people to avoid overly long times
                 // Plan to take 5 seconds per team pick
-                delayTime = 50;
+                delayTime = 100;
                 dispatch(highlightPerson(id))
                 await delay(delayTime);
                 dispatch(highlightPerson(id))

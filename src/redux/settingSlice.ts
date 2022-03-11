@@ -7,7 +7,7 @@ interface SettingState {
 
 const initialState: SettingState = {
     teamSize: 3,
-    csvHasHeader: false,
+    csvHasHeader: true,
 }
 
 export const settingSlice = createSlice({
