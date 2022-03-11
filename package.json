@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config ./webpack.config.js",
-    "start": "npm run build && electron ./dist/electron.js"
+    "start": "npm run build && electron ./dist/electron.js",
+    "package-native": "npm run build && electron-packager .",
+    "package-mac": "npm run build && electron-packager ./ --platform=darwin --arch=x64 --icon=./tb-icon.icns"
   },
   "keywords": [],
   "author": "Joseph Boothby",
